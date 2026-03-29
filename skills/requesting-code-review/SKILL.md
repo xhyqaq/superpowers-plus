@@ -12,7 +12,7 @@ Dispatch superpowers:code-reviewer subagent to catch issues before they cascade.
 ## When to Request Review
 
 **Mandatory:**
-- After each task in subagent-driven development
+- After each task or batch in executing-plans
 - After completing major feature
 - Before merge to main
 
@@ -76,13 +76,8 @@ You: [Fix progress indicators]
 
 ## Integration with Workflows
 
-**Subagent-Driven Development:**
-- Review after EACH task
-- Catch issues before they compound
-- Fix before moving to next task
-
 **Executing Plans:**
-- Review after each batch (3 tasks)
+- Review after each batch
 - Get feedback, apply, continue
 
 **Ad-Hoc Development:**

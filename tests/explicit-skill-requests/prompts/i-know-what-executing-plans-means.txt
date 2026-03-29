@@ -1,0 +1,8 @@
+I have my implementation plan ready at docs/superpowers/plans/auth-system.md.
+
+I want to use executing-plans to execute it. That means:
+- Automatically dispatch subagents for independent tasks
+- Use serial subagent execution when tasks are tightly coupled
+- Keep iteration fast without asking me to choose a mode
+
+Let's start - please read the plan and execute it.

@@ -7,11 +7,11 @@ description: Use when you have a written implementation plan to execute in a sep
 
 ## Overview
 
-Load plan, review critically, execute all tasks, report when complete.
+Load plan, review critically, execute all tasks with subagents, report when complete.
 
 **Announce at start:** "I'm using the executing-plans skill to implement this plan."
 
-**Note:** Tell your human partner that Superpowers works much better with access to subagents. The quality of its work will be significantly higher if run on a platform with subagent support (such as Claude Code or Codex). If subagents are available, use superpowers:subagent-driven-development instead of this skill.
+**Note:** This skill assumes subagent support is available. It chooses between parallel and serial subagent dispatch automatically, based on task independence and shared context boundaries.
 
 ## The Process
 
@@ -23,11 +23,16 @@ Load plan, review critically, execute all tasks, report when complete.
 
 ### Step 2: Execute Tasks
 
-For each task:
-1. Mark as in_progress
-2. Follow each step exactly (plan has bite-sized steps)
-3. Run verifications as specified
-4. Mark as completed
+For each task or batch:
+1. Decide whether the tasks are independent enough for parallel subagents.
+2. If they are, dispatch one subagent per independent task.
+3. If they are not, dispatch subagents serially so each task receives only the upstream context it needs.
+4. Give each subagent only the task-local slice of context: its task text, allowed files, acceptance criteria, and any directly required upstream summary.
+5. Default to the lowest-capability mini-class model that can complete the task reliably; upgrade only when a task fails, needs broader reasoning, or crosses a risk boundary.
+6. Mark the task or batch as in_progress.
+7. Follow each step exactly (plan has bite-sized steps).
+8. Run verifications as specified.
+9. Mark as completed.
 
 ### Step 3: Complete Development
 
@@ -58,7 +63,7 @@ After all tasks complete and verified:
 - Review plan critically first
 - Follow plan steps exactly
 - Don't skip verifications
-- Reference skills when plan says to
+- Use subagents for execution rather than inline task work
 - Stop when blocked, don't guess
 - Never start implementation on main/master branch without explicit user consent
 

@@ -1,22 +1,20 @@
 #!/usr/bin/env bash
-# Integration Test: subagent-driven-development workflow
-# Actually executes a plan and verifies the new workflow behaviors
+# Integration Test: executing-plans workflow
+# Actually executes a plan and verifies the automatic routing behaviors
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 source "$SCRIPT_DIR/test-helpers.sh"
 
 echo "========================================"
-echo " Integration Test: subagent-driven-development"
+echo " Integration Test: executing-plans"
 echo "========================================"
 echo ""
 echo "This test executes a real plan using the skill and verifies:"
-echo "  1. Plan is read once (not per task)"
-echo "  2. Full task text provided to subagents"
-echo "  3. Subagents perform self-review"
-echo "  4. Spec compliance review before code quality"
-echo "  5. Review loops when issues found"
-echo "  6. Spec reviewer reads code independently"
+echo "  1. Plan is read once at the start"
+echo "  2. Task-specific context is provided to subagents"
+echo "  3. Subagents are used instead of inline task execution"
+echo "  4. Working implementation is produced and verified"
 echo ""
 echo "WARNING: This test may take 10-30 minutes to complete."
 echo ""
@@ -48,7 +46,7 @@ mkdir -p src test docs/superpowers/plans
 cat > docs/superpowers/plans/implementation-plan.md <<'EOF'
 # Test Implementation Plan
 
-This is a minimal plan to test the subagent-driven-development workflow.
+This is a minimal plan to test the executing-plans workflow.
 
 ## Task 1: Create Add Function
 
@@ -115,20 +113,19 @@ echo ""
 echo "Project setup complete. Starting execution..."
 echo ""
 
-# Run Claude with subagent-driven-development
+# Run Claude with executing-plans
 # Capture full output to analyze
 OUTPUT_FILE="$TEST_PROJECT/claude-output.txt"
 
 # Create prompt file
 cat > "$TEST_PROJECT/prompt.txt" <<'EOF'
-I want you to execute the implementation plan at docs/superpowers/plans/implementation-plan.md using the subagent-driven-development skill.
+I want you to execute the implementation plan at docs/superpowers/plans/implementation-plan.md using the executing-plans skill.
 
 IMPORTANT: Follow the skill exactly. I will be verifying that you:
 1. Read the plan once at the beginning
-2. Provide full task text to subagents (don't make them read files)
-3. Ensure subagents do self-review before reporting
-4. Run spec compliance review before code quality review
-5. Use review loops when issues are found
+2. Provide task-specific context to subagents rather than the whole conversation
+3. Use subagents instead of doing the task work inline
+4. Keep the workflow inside executing-plans
 
 Begin now. Execute the plan.
 EOF
@@ -136,14 +133,13 @@ EOF
 # Note: We use a longer timeout since this is integration testing
 # Use --allowed-tools to enable tool usage in headless mode
 # IMPORTANT: Run from superpowers directory so local dev skills are available
-PROMPT="Change to directory $TEST_PROJECT and then execute the implementation plan at docs/superpowers/plans/implementation-plan.md using the subagent-driven-development skill.
+PROMPT="Change to directory $TEST_PROJECT and then execute the implementation plan at docs/superpowers/plans/implementation-plan.md using the executing-plans skill.
 
 IMPORTANT: Follow the skill exactly. I will be verifying that you:
 1. Read the plan once at the beginning
-2. Provide full task text to subagents (don't make them read files)
-3. Ensure subagents do self-review before reporting
-4. Run spec compliance review before code quality review
-5. Use review loops when issues are found
+2. Provide task-specific context to subagents rather than the whole conversation
+3. Use subagents instead of doing the task work inline
+4. Keep the workflow inside executing-plans
 
 Begin now. Execute the plan."
 
@@ -186,8 +182,8 @@ echo ""
 
 # Test 1: Skill was invoked
 echo "Test 1: Skill tool invoked..."
-if grep -q '"name":"Skill".*"skill":"superpowers:subagent-driven-development"' "$SESSION_FILE"; then
-    echo "  [PASS] subagent-driven-development skill was invoked"
+if grep -q '"name":"Skill".*"skill":"superpowers:executing-plans"' "$SESSION_FILE"; then
+    echo "  [PASS] executing-plans skill was invoked"
 else
     echo "  [FAIL] Skill was not invoked"
     FAILED=$((FAILED + 1))
@@ -267,8 +263,8 @@ else
 fi
 echo ""
 
-# Test 8: Check for extra features (spec compliance should catch)
-echo "Test 8: No extra features added (spec compliance)..."
+# Test 8: Check for extra features
+echo "Test 8: No extra features added..."
 if grep -q "export function divide\|export function power\|export function subtract" "$TEST_PROJECT/src/math.js" 2>/dev/null; then
     echo "  [WARN] Extra features found (spec review should have caught this)"
     # Not failing on this as it tests reviewer effectiveness
@@ -295,12 +291,10 @@ if [ $FAILED -eq 0 ]; then
     echo "STATUS: PASSED"
     echo "All verification tests passed!"
     echo ""
-    echo "The subagent-driven-development skill correctly:"
+    echo "The executing-plans skill correctly:"
     echo "  ✓ Reads plan once at start"
-    echo "  ✓ Provides full task text to subagents"
-    echo "  ✓ Enforces self-review"
-    echo "  ✓ Runs spec compliance before code quality"
-    echo "  ✓ Spec reviewer verifies independently"
+    echo "  ✓ Provides task-specific context to subagents"
+    echo "  ✓ Uses subagents to execute the work"
     echo "  ✓ Produces working implementation"
     exit 0
 else

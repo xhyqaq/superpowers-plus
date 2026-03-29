@@ -22,7 +22,7 @@ Add to your Codex config (`~/.codex/config.toml`):
 multi_agent = true
 ```
 
-This enables `spawn_agent`, `wait`, and `close_agent` for skills like `dispatching-parallel-agents` and `subagent-driven-development`.
+This enables `spawn_agent`, `wait`, and `close_agent` for skills like `dispatching-parallel-agents` and `executing-plans`.
 
 ## Named agent dispatch
 
@@ -62,6 +62,7 @@ specified in the instructions above.
 - Use task-delegation framing ("Your task is...") rather than persona framing ("You are...")
 - Wrap instructions in XML tags — the model treats tagged blocks as authoritative
 - End with an explicit execution directive to prevent summarization of the instructions
+- Pass only the task-local slice of context to each spawned agent unless the task explicitly depends on upstream outputs
 
 ### When this workaround can be removed
 

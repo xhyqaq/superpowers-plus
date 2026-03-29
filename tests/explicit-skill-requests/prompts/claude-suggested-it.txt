@@ -1,11 +1,7 @@
 [Previous assistant message]:
 Plan complete and saved to docs/superpowers/plans/auth-system.md.
 
-Two execution options:
-1. Subagent-Driven (this session) - I dispatch a fresh subagent per task, review between tasks, fast iteration within this conversation
-2. Parallel Session (separate) - Open a new Claude Code session with the execute-plan skill, batch execution with review checkpoints
-
-Which approach do you want to use for implementation?
+Please execute it using executing-plans. The skill should automatically choose parallel or serial subagent routing based on task dependency.
 
 [Your response]:
-subagent-driven-development, please
+please use executing-plans

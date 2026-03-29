@@ -1,4 +1,4 @@
-# Installing Superpowers for OpenCode
+# Installing Superpowers Plus for OpenCode
 
 ## Prerequisites
 
@@ -6,31 +6,31 @@
 
 ## Installation
 
-Add superpowers to the `plugin` array in your `opencode.json` (global or project-level):
+Add superpowers-plus to the `plugin` array in your `opencode.json` (global or project-level):
 
 ```json
 {
-  "plugin": ["superpowers@git+https://github.com/obra/superpowers.git"]
+  "plugin": ["superpowers-plus@git+https://github.com/xhyqaq/superpowers-plus.git"]
 }
 ```
 
 Restart OpenCode. That's it — the plugin auto-installs and registers all skills.
 
-Verify by asking: "Tell me about your superpowers"
+Verify by asking: "Tell me about your superpowers plus"
 
 ## Migrating from the old symlink-based install
 
-If you previously installed superpowers using `git clone` and symlinks, remove the old setup:
+If you previously installed superpowers-plus using `git clone` and symlinks, remove the old setup:
 
 ```bash
 # Remove old symlinks
-rm -f ~/.config/opencode/plugins/superpowers.js
-rm -rf ~/.config/opencode/skills/superpowers
+rm -f ~/.config/opencode/plugins/superpowers-plus.js
+rm -rf ~/.config/opencode/skills/superpowers-plus
 
 # Optionally remove the cloned repo
-rm -rf ~/.config/opencode/superpowers
+rm -rf ~/.config/opencode/superpowers-plus
 
-# Remove skills.paths from opencode.json if you added one for superpowers
+# Remove skills.paths from opencode.json if you added one for superpowers-plus
 ```
 
 Then follow the installation steps above.
@@ -41,18 +41,18 @@ Use OpenCode's native `skill` tool:
 
 ```
 use skill tool to list skills
-use skill tool to load superpowers/brainstorming
+use skill tool to load superpowers-plus/brainstorming
 ```
 
 ## Updating
 
-Superpowers updates automatically when you restart OpenCode.
+Superpowers Plus updates automatically when you restart OpenCode.
 
 To pin a specific version:
 
 ```json
 {
-  "plugin": ["superpowers@git+https://github.com/obra/superpowers.git#v5.0.3"]
+  "plugin": ["superpowers-plus@git+https://github.com/xhyqaq/superpowers-plus.git#main"]
 }
 ```
 
@@ -60,7 +60,7 @@ To pin a specific version:
 
 ### Plugin not loading
 
-1. Check logs: `opencode run --print-logs "hello" 2>&1 | grep -i superpowers`
+1. Check logs: `opencode run --print-logs "hello" 2>&1 | grep -i superpowers-plus`
 2. Verify the plugin line in your `opencode.json`
 3. Make sure you're running a recent version of OpenCode
 
@@ -79,5 +79,5 @@ When skills reference Claude Code tools:
 
 ## Getting Help
 
-- Report issues: https://github.com/obra/superpowers/issues
-- Full documentation: https://github.com/obra/superpowers/blob/main/docs/README.opencode.md
+- Report issues: https://github.com/xhyqaq/superpowers-plus/issues
+- Full documentation: https://github.com/xhyqaq/superpowers-plus/blob/main/docs/README.opencode.md

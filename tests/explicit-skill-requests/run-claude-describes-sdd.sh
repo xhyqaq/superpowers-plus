@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Test where Claude explicitly describes subagent-driven-development before user requests it
+# Test where Claude explicitly describes executing-plans before user requests it
 # This mimics the original failure scenario
 
 set -e
@@ -14,7 +14,7 @@ mkdir -p "$OUTPUT_DIR"
 PROJECT_DIR="$OUTPUT_DIR/project"
 mkdir -p "$PROJECT_DIR/docs/superpowers/plans"
 
-echo "=== Test: Claude Describes SDD First ==="
+echo "=== Test: Claude Describes Executing Plans First ==="
 echo "Output dir: $OUTPUT_DIR"
 echo ""
 
@@ -34,9 +34,9 @@ Create login and register endpoints.
 Protect routes with JWT validation.
 EOF
 
-# Turn 1: Have Claude describe execution options including SDD
+# Turn 1: Have Claude describe execution options including executing-plans
 echo ">>> Turn 1: Ask Claude to describe execution options..."
-claude -p "I have a plan at docs/superpowers/plans/auth-system.md. Tell me about my options for executing it, including what subagent-driven-development means and how it works." \
+claude -p "I have a plan at docs/superpowers/plans/auth-system.md. Tell me about my options for executing it, including what executing-plans means and how it works." \
     --model haiku \
     --plugin-dir "$PLUGIN_DIR" \
     --dangerously-skip-permissions \
@@ -46,9 +46,9 @@ claude -p "I have a plan at docs/superpowers/plans/auth-system.md. Tell me about
 echo "Done."
 
 # Turn 2: THE CRITICAL TEST - now that Claude has explained it
-echo ">>> Turn 2: Request subagent-driven-development..."
+echo ">>> Turn 2: Request executing-plans..."
 FINAL_LOG="$OUTPUT_DIR/turn2.json"
-claude -p "subagent-driven-development, please" \
+claude -p "executing-plans, please" \
     --continue \
     --model haiku \
     --plugin-dir "$PLUGIN_DIR" \
@@ -61,7 +61,7 @@ echo ""
 
 echo "=== Results ==="
 
-# Check Turn 1 to see if Claude described SDD
+# Check Turn 1 to see if Claude described executing-plans
 echo "Turn 1 - Claude's description of options (excerpt):"
 grep '"type":"assistant"' "$OUTPUT_DIR/turn1.json" | head -1 | jq -r '.message.content[0].text // .message.content' 2>/dev/null | head -c 800 || echo "  (could not extract)"
 echo ""
@@ -69,7 +69,7 @@ echo "---"
 echo ""
 
 # Check final turn
-SKILL_PATTERN='"skill":"([^"]*:)?subagent-driven-development"'
+SKILL_PATTERN='"skill":"([^"]*:)?executing-plans"'
 if grep -q '"name":"Skill"' "$FINAL_LOG" && grep -qE "$SKILL_PATTERN" "$FINAL_LOG"; then
     echo "PASS: Skill was triggered after Claude described it"
     TRIGGERED=true
