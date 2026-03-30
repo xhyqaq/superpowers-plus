@@ -20,10 +20,28 @@ Superpowers Plus 是基于上游 `superpowers` 演进出来的强化版工作流
 
 Superpowers Plus 当前相对上游主要做了这些收敛和调整：
 
+**执行模型统一：**
 - 将计划执行入口统一为 `executing-plans`，不再保留 `subagent-driven-development` 作为独立工作流入口。
 - `executing-plans` 改为控制器式执行：自动判断任务是否适合并行子代理，或需要串行子代理，不再要求用户在执行前二选一。
 - 子代理默认只接收任务级最小上下文，而不是整段对话历史；执行模型默认优先低成本子模型，必要时再升级。
 - 计划交接文案改为直接进入执行，不再在 `writing-plans` 之后插入 "Subagent-Driven / Inline Execution" 选择题。
+
+**简化子代理工作流：**
+- 移除了子代理执行时的强制 spec 和 code review 要求。
+- 去掉了上游对子代理的规范性开发约束。
+- 设计理念：既然 `brainstorming` 和 `writing-plans` 已经提供了充分的设计和规划，执行阶段应该信赖并遵循这个计划，而不是在子代理层面重复设计流程。
+- 强制执行频繁的细粒度提交：每个 RED-GREEN-REFACTOR 循环都独立提交，创建清晰的实施审计轨迹。
+
+**增强文档管理：**
+- 引入结构化文档追踪系统：
+  - 设计规格 → `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md`
+  - 实施计划 → `docs/superpowers/plans/YYYY-MM-DD-<feature-name>.md`
+  - 提交文档 → `docs/superpowers/commits/<module>/`
+- 为 spec 和 plan 内置自审查机制，在用户审查前提前发现占位符、矛盾和歧义。
+- 新增 `reusable-assets-index` 技能，用于管理可复用代码/组件文档。
+- 强化了 AGENTS.md 和 CLAUDE.md 中的仓库级文档索引。
+
+**仓库一致性：**
 - 仓库内的测试、示例与活跃文档已经围绕新的单入口执行模型更新，避免 README 说一套、技能说一套、测试再说一套。
 
 这不是一份完整变更日志，而是使用者最需要知道的行为差异。
@@ -151,6 +169,7 @@ gemini extensions update superpowers-plus
 **元技能**
 - **writing-skills** - 按照最佳实践创建新技能（包含测试方法论）
 - **using-superpowers** - 技能系统介绍
+- **reusable-assets-index** - 管理可复用代码/组件文档的 AGENTS.md/CLAUDE.md 索引
 
 ## 理念
 

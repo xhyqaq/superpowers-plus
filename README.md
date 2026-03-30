@@ -20,10 +20,28 @@ There's a bunch more to it, but that's the core of the system. And because the s
 
 Superpowers Plus has made the following consolidations and adjustments relative to the upstream:
 
+**Execution Model Unification:**
 - Unified the plan execution entry point to `executing-plans`, no longer maintaining `subagent-driven-development` as a separate workflow entry.
 - `executing-plans` now operates as a controller-style executor: automatically determines whether tasks are suitable for parallel subagents or require serial subagents, eliminating the need for users to choose between the two before execution.
 - Subagents now receive only task-level minimal context by default, not the entire conversation history; execution models default to lower-cost sub-models, upgrading only when necessary.
 - Plan handoff messaging now leads directly to execution, no longer inserting a "Subagent-Driven / Inline Execution" choice after `writing-plans`.
+
+**Simplified Subagent Workflow:**
+- Removed mandatory spec and code review requirements for subagent execution.
+- Eliminated upstream's prescriptive subagent development conventions.
+- Design philosophy: Since `brainstorming` and `writing-plans` already provide thorough design and planning, the execution phase should trust and follow that plan rather than repeat design processes at the subagent level.
+- Enforces frequent, granular commits: every RED-GREEN-REFACTOR cycle commits independently, creating a clear implementation audit trail.
+
+**Enhanced Documentation Management:**
+- Introduced structured documentation tracking system:
+  - Design specs → `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md`
+  - Implementation plans → `docs/superpowers/plans/YYYY-MM-DD-<feature-name>.md`
+  - Commit documentation → `docs/superpowers/commits/<module>/`
+- Built-in self-review mechanisms for both specs and plans before user review, catching placeholders, contradictions, and ambiguities early.
+- Added `reusable-assets-index` skill for managing reusable code/component documentation.
+- Strengthened repository-level documentation indexing in AGENTS.md and CLAUDE.md.
+
+**Repository Consistency:**
 - Tests, examples, and active documentation within the repository have been updated around the new single-entry execution model, avoiding discrepancies between README, skills, and tests.
 
 This is not a complete changelog, but rather the behavioral differences users need to know.
@@ -151,6 +169,7 @@ Start a new session in your chosen platform and ask for something that should tr
 **Meta**
 - **writing-skills** - Create new skills following best practices (includes testing methodology)
 - **using-superpowers** - Introduction to the skills system
+- **reusable-assets-index** - Manage reusable code/component documentation in AGENTS.md/CLAUDE.md indexes
 
 ## Philosophy
 
