@@ -155,8 +155,16 @@ Wait for the user's response. If they request changes, make them and re-run the 
 
 **Implementation:**
 
+**In autonomous mode:**
 - Invoke the writing-plans skill to create a detailed implementation plan
-- Do NOT invoke any other skill. writing-plans is the next step.
+- The plan will be saved and committed automatically
+- After writing-plans completes, it will automatically invoke executing-plans to begin implementation
+- The entire pipeline (brainstorming → planning → execution) runs without further approval gates
+
+**Not in autonomous mode:**
+- Invoke the writing-plans skill to create a detailed implementation plan
+- Stop after the plan is complete and wait for user decision on whether to execute
+- Do NOT invoke any other skill beyond writing-plans at this stage
 
 ## Key Principles
 
