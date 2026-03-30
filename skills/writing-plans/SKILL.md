@@ -133,8 +133,17 @@ If you find issues, fix them inline. No need to re-review — just fix and move 
 
 ## Execution Handoff
 
-After saving the plan, hand it off directly:
+After saving and committing the plan:
 
-**"Plan complete and saved to `docs/superpowers/plans/<filename>.md`. Execute it with `superpowers:executing-plans`."**
+**Detecting autonomous mode:**
+Check if the user previously gave explicit authorization to proceed without approval gates (e.g., "don't ask me anymore", "you decide", "full authority"). This authorization signal should have been passed from the brainstorming skill.
 
-`executing-plans` will decide whether each batch should run in parallel or serial subagent mode, keep each subagent context minimal, and continue through the required review checkpoints.
+**If in autonomous mode:**
+- Announce: "Plan complete and saved to `docs/superpowers/plans/<filename>.md`. Autonomous mode: proceeding directly to execution."
+- Automatically invoke `superpowers:executing-plans` to begin implementation
+- Do NOT wait for user approval
+
+**If NOT in autonomous mode:**
+- Announce: "Plan complete and saved to `docs/superpowers/plans/<filename>.md`. Execute it with `superpowers:executing-plans`."
+- Stop and wait for user decision on whether to proceed
+- `executing-plans` will decide whether each batch should run in parallel or serial subagent mode, keep each subagent context minimal, and continue through the required review checkpoints
