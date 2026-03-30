@@ -22,6 +22,25 @@ Your context is precious and limited. Reserve it for coordination, planning, and
 
 This skill assumes subagent support is available. It chooses between parallel and serial subagent dispatch automatically, based on task independence and shared context boundaries.
 
+## Model Strategy
+
+**Subagents use lower-capability models than the main agent by default.**
+
+Main agent (you) uses high-capability models for planning and coordination. Subagents execute detailed plans with lower-capability models to preserve expensive tokens.
+
+**Default subagent models (by platform):**
+- **Claude Code**: `claude-haiku-4-5-20251001` or `haiku`
+- **Codex**: `gpt-5.3` or equivalent lower-tier model
+- **Gemini**: `gemini-1.5-flash` or `gemini-2.0-flash-exp`
+- **Other platforms**: Use the lowest-capability model tier available
+
+**Upgrade policy:**
+When a subagent task fails or requires deeper reasoning:
+1. Retry with the **same model as the main agent** (your current model)
+2. If still fails, escalate to the user
+
+**Rationale**: Well-written plans from high-capability main agents enable cost-effective execution with lower-capability subagents. This strategy can reduce token costs by 10-20x for execution-heavy workloads while maintaining quality.
+
 ## The Process
 
 ### Step 1: Load and Review Plan
@@ -42,8 +61,8 @@ For each task or batch:
 
 2. **Dispatch subagents with minimal context:**
    - Give each subagent only the task-local slice: task text, allowed files, acceptance criteria, and any directly required upstream summary
-   - Default to the lowest-capability model that can complete the task reliably
-   - Upgrade model only when a task fails, needs broader reasoning, or crosses a risk boundary
+   - Use lower-capability models by default (see Model Strategy above)
+   - Upgrade to main agent's model only when task fails or requires deeper reasoning
 
 3. **Track progress:**
    - Mark task or batch as in_progress before dispatch
