@@ -38,11 +38,34 @@ Superpowers Plus 的安装入口统一指向本仓库：
 
 推荐直接从仓库安装，而不是依赖上游 marketplace：
 
+**快速安装（推荐）：**
+
+```bash
+git clone https://github.com/xhyqaq/superpowers-plus.git ~/.claude/superpowers-plus
+bash ~/.claude/superpowers-plus/.claude-plugin/install.sh
+```
+
+**手动安装：**
+
 ```bash
 git clone https://github.com/xhyqaq/superpowers-plus.git ~/.claude/superpowers-plus
 mkdir -p ~/.claude/skills
-ln -s ~/.claude/superpowers-plus/skills ~/.claude/skills/superpowers-plus
+cd ~/.claude/superpowers-plus/skills
+for skill in */; do
+  skill_name="${skill%/}"
+  ln -sf "$HOME/.claude/superpowers-plus/skills/$skill_name" "$HOME/.claude/skills/superpowers:$skill_name"
+done
 ```
+
+> **注意**：Claude Code 只扫描 `~/.claude/skills/` 的直接子目录，因此需要为每个 skill 创建独立的软链接，而不是链接整个 skills 目录。
+
+**验证安装：**
+
+```bash
+ls ~/.claude/skills/ | grep superpowers:
+```
+
+应该看到多个 `superpowers:*` 开头的软链接。
 
 ### Cursor
 
