@@ -123,7 +123,18 @@ After writing the spec document, look at it with fresh eyes:
 
 Fix any issues inline. No need to re-review — just fix and move on.
 
+**Detecting Explicit Authorization:**
+Before reaching the User Review Gate, check if the user has given explicit authorization to proceed autonomously during the design phase (after step 5). Authorization signals include:
+- "don't ask me anymore" / "stop asking"
+- "you decide" / "your call" / "you choose"
+- "proceed autonomously" / "full authority"
+- "skip the approval gates"
+- Any clear statement delegating decision-making authority to you
+
+If explicit authorization was detected AFTER the design approval phase, skip the User Review Gate below and proceed directly to invoking writing-plans. The user has already authorized autonomous progress.
+
 **User Review Gate:**
+(Only if no explicit authorization detected above)
 After the spec review loop passes, ask the user to review the written spec before proceeding:
 
 > "Spec written and committed to `<path>`. Please review it and let me know if you want to make any changes before we start writing out the implementation plan."
