@@ -8,9 +8,10 @@ description: Use when explicitly asked to scan a repository for missing superpow
 ## Overview
 
 This skill scans and repairs missing `superpowers` documentation. Core
-principle: the main agent identifies module boundaries first, then dispatches
-at least four module-scoped subagents; only the main agent may write shared
-instruction files or resolve cross-module gaps after all subagents return.
+principle: the main agent identifies business/domain module boundaries first,
+then dispatches at least four module-scoped subagents; only the main agent may
+write shared instruction files or resolve cross-module gaps after all
+subagents return.
 
 This skill is explicit-only. Do not trigger it implicitly.
 
@@ -45,20 +46,62 @@ Repairs may include:
 
 Default doc types remain `feat`, `fix`, `docs`, and `misc`.
 
+## Module Meaning
+
+In this skill, `module` means a business/domain module by default, not a
+package, app, workspace, or top-level directory.
+
+Examples of valid modules:
+
+- `sessions`
+- `resume`
+- `versions`
+- `chat`
+- `upload`
+- `auth`
+- `billing`
+
+Non-examples by default:
+
+- `frontend`
+- `backend`
+- `packages/shared-types`
+- `workspace-root`
+
+Those names may still be evidence sources or infrastructure boundaries, but
+they are not the default module taxonomy for this skill.
+
+Use package- or workspace-named modules only when repository evidence already
+shows that those names are the intended module taxonomy. Do not choose package
+boundaries merely because they are easier to discover during minimal
+inspection.
+
+A business module may span multiple packages or directories. For example, one
+`sessions` module may draw evidence from frontend routes, backend handlers, and
+shared types. In that case, keep one owner for the `sessions` docs directory,
+allow read-only inspection across those code locations, and still restrict
+writes to that module's `docs/superpowers/.../<module>/` surfaces.
+
+Use `workspace-root` only for truly repository-wide coordination docs that
+cannot truthfully belong to a single business module.
+
 ## Rules
 
 1. Before the real audit begins, the main agent may do only minimal discovery:
    repository root, instruction files, current `docs/superpowers/` layout, and
-   module directory boundaries used for subagent assignment.
-2. Dispatch at least four subagents whenever at least four modules exist. If
-   there are more than four modules, keep assigning by module so ownership
-   stays non-overlapping.
+   business/domain module boundaries used for subagent assignment. Do not
+   default to package names as module names unless repository evidence already
+   defines them that way.
+2. Dispatch at least four subagents whenever at least four business modules
+   exist. If there are more than four modules, keep assigning by module so
+   ownership stays non-overlapping.
 3. Module ownership must be exclusive for the current run. One module may be
    owned by only one subagent.
 4. Main-agent strong wait is mandatory after dispatch. Do not redo module audit
    work while subagents are running.
-5. Each subagent may scan and write only inside the `docs/superpowers/`
-   directories for its assigned module.
+5. Each subagent may inspect any repository surfaces needed to understand its
+   assigned business module, but it may write only inside the
+   `docs/superpowers/` directories for that assigned module.
 6. Subagents must not edit `AGENTS.md` or `CLAUDE.md`.
 7. Any required `AGENTS.md` or `CLAUDE.md` update must be returned to the main
    agent as a handoff package. The main agent performs the actual write.
@@ -78,7 +121,9 @@ Default doc types remain `feat`, `fix`, `docs`, and `misc`.
    only the minimum usable skeleton and state the gap explicitly.
 12. Instruction-file indexes must list directories only, never document files.
 13. Treat upstream flat examples such as `docs/superpowers/specs/...` as
-    legacy and normalize them to module paths before repairing.
+    legacy and normalize them to business-module paths before repairing. Do not
+    silently normalize them to package or workspace names unless the repository
+    already uses those names as its module taxonomy.
 14. The workflow does not complete when subagents finish. The main agent must:
     - collect all subagent outputs
     - consolidate cross-module gaps after all subagents return
@@ -94,7 +139,7 @@ Default doc types remain `feat`, `fix`, `docs`, and `misc`.
 Owns:
 
 - minimal repository discovery
-- module detection and module-to-subagent assignment
+- business-module detection and module-to-subagent assignment
 - dispatching at least four subagents when module count allows
 - strong wait
 - cross-module gap consolidation after all subagents finish
@@ -116,6 +161,8 @@ Owns:
 Each subagent may inspect `AGENTS.md` and `CLAUDE.md` read-only in order to
 prepare the handoff package, but it must not write either file. A subagent may
 reference another module as evidence, but it must not write that module's docs.
+It may also inspect multiple packages or apps when the assigned business module
+spans those surfaces.
 
 ## Handoff Contract
 
@@ -145,20 +192,23 @@ stricter.
 
 | Situation | Default action |
 |-----------|----------------|
-| Missing module directory | Create it |
+| Missing module directory | Create the business-module directory |
 | Missing linked doc with clear purpose | Create minimum usable doc |
 | Missing linked doc without enough evidence | Create skeleton with explicit gap note |
 | Missing shared index block | Return a directory-level block for main-agent write |
 | Invalid type segment | Normalize to `feat` / `fix` / `docs` / `misc` |
-| Legacy flat path | Move or rewrite to module path |
+| Legacy flat path | Move or rewrite to business-module path |
 
 ## Final Verification
 
 The main agent must verify all of the following before closing the task:
 
 - module ownership was assigned before the real audit work
-- at least four subagents were used when at least four modules existed
+- at least four subagents were used when at least four business modules existed
 - no module was owned by more than one subagent
+- module assignment followed business/domain boundaries rather than defaulting
+  to package or workspace names, unless repository evidence explicitly required
+  package-named modules
 - `AGENTS.md` and `CLAUDE.md` were written only by the main agent
 - subagent-owned docs were actually created or repaired
 - no subagent wrote another module's docs
@@ -171,10 +221,11 @@ The main agent must verify all of the following before closing the task:
 | Concern | Policy |
 |---------|--------|
 | Trigger mode | Explicit only |
-| Main agent before dispatch | Minimal discovery + module detection only |
+| Module meaning | Business/domain module by default; package/workspace name only with explicit repo evidence |
+| Main agent before dispatch | Minimal discovery + business-module detection only |
 | Main agent after dispatch | Strong wait |
-| Subagent count | At least 4 when module count allows |
-| Subagent writable surface | Assigned module only |
+| Subagent count | At least 4 when business-module count allows |
+| Subagent writable surface | Assigned business-module docs only |
 | Shared files | `AGENTS.md`, `CLAUDE.md` |
 | Shared-file writer | Main agent only |
 | Shared-file handoff | Path + suggested block + covered dirs + evidence |
@@ -192,3 +243,5 @@ The main agent must verify all of the following before closing the task:
 - Treating subagent completion as final completion
 - Writing file-level entries into the instruction-file index
 - Inventing missing facts instead of leaving explicit gap notes
+- Interpreting `module` as `frontend`, `backend`, or another package boundary
+  by default when the repository evidence actually points to domain modules
