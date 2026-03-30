@@ -17,6 +17,25 @@ Do NOT invoke any implementation skill, write any code, scaffold any project, or
 
 Every project goes through this process. A todo list, a single-function utility, a config change — all of them. "Simple" projects are where unexamined assumptions cause the most wasted work. The design can be short (a few sentences for truly simple projects), but you MUST present it and get approval.
 
+## Autonomous Mode
+
+**Detecting Explicit Authorization:**
+At any point during the brainstorming process, if the user gives explicit authorization to proceed without further approval checks, enter **autonomous mode** for all remaining steps.
+
+Authorization signals include:
+- "don't ask me anymore" / "stop asking" / "no more questions"
+- "you decide" / "your call" / "you choose" / "your decision"
+- "proceed autonomously" / "full authority" / "full autonomy"
+- "skip the approval gates" / "skip approvals"
+- Any clear statement delegating decision-making authority to you
+
+**When autonomous mode is activated:**
+- **Step 4 (Approaches):** Present your recommendation and reasoning, but proceed without waiting for user selection
+- **Step 5 (Design):** Present the entire design at once without asking for approval after each section
+- **Step 8 (Spec Review):** Skip the user review gate and proceed directly to writing-plans
+
+**Important:** Autonomous mode does NOT skip step 3 (clarifying questions) if authorization is given during that phase. Clarifying questions are essential for understanding requirements. Autonomous mode only affects approval gates, not information gathering.
+
 ## Checklist
 
 You MUST create a task for each of these items and complete them in order:
@@ -82,14 +101,17 @@ digraph brainstorming {
 - Propose 2-3 different approaches with trade-offs
 - Present options conversationally with your recommendation and reasoning
 - Lead with your recommended option and explain why
+- **Unless in autonomous mode**, wait for user to select an approach before proceeding
+- **In autonomous mode**: Proceed with your recommended approach without waiting for selection
 
 **Presenting the design:**
 
 - Once you believe you understand what you're building, present the design
 - Scale each section to its complexity: a few sentences if straightforward, up to 200-300 words if nuanced
-- Ask after each section whether it looks right so far
+- **Unless in autonomous mode**, ask after each section whether it looks right so far
 - Cover: architecture, components, data flow, error handling, testing
 - Be ready to go back and clarify if something doesn't make sense
+- **In autonomous mode**: Present the entire design at once without intermediate approval checks
 
 **Design for isolation and clarity:**
 
@@ -124,6 +146,7 @@ After writing the spec document, look at it with fresh eyes:
 Fix any issues inline. No need to re-review — just fix and move on.
 
 **User Review Gate:**
+(Skip this if in autonomous mode - see Autonomous Mode section above)
 After the spec review loop passes, ask the user to review the written spec before proceeding:
 
 > "Spec written and committed to `<path>`. Please review it and let me know if you want to make any changes before we start writing out the implementation plan."
