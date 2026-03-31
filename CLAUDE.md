@@ -26,6 +26,51 @@
 
 ---
 
+# 代码规范
+
+本章节记录项目级别的设计原则、命名约定、接口模式和架构指南。这些是指导性内容（WHY/WHAT），而非具体实现（HOW）。
+
+**使用指南**：
+- 在代码审查、设计讨论或架构决策时参考本章节
+- 优先遵循已记录的规范，确保一致性
+- 如发现规范需要更新或补充，使用 `superpowers:maintaining-code-standards` 技能
+
+**与可复用资产索引的区别**：
+- **代码规范**：设计原则和约定（例如："所有 API 应遵循 RESTful 规范"）
+- **可复用资产索引**：具体代码实现（例如："使用 `docs/superpowers/reuse/api-wrapper/` 中的 HTTP 客户端"）
+
+---
+
+## API Design
+
+目前暂无已记录的 API 设计规范。
+
+## Naming Conventions
+
+目前暂无已记录的命名约定。
+
+## Architecture Patterns
+
+目前暂无已记录的架构模式。
+
+## Error Handling
+
+目前暂无已记录的错误处理规范。
+
+## Testing Practices
+
+目前暂无已记录的测试实践规范。
+
+## Performance Guidelines
+
+目前暂无已记录的性能指南。
+
+## Security Practices
+
+目前暂无已记录的安全实践规范。
+
+---
+
 ## 项目结构索引
 
 ### Skills (技能定义)
@@ -44,6 +89,7 @@
   - `skills/using-superpowers/` - 使用超能力技能
   - `skills/using-git-worktrees/` - 使用 Git 工作树技能
   - `skills/reusable-assets-index/` - 可复用资产索引技能
+  - `skills/maintaining-code-standards/` - 代码规范维护技能
   - `skills/verification-before-completion/` - 完成前验证技能
 
 ### Agents (代理定义)
