@@ -62,6 +62,9 @@ audits unless the user explicitly asks for those.
    inventing missing project facts.
 9. Do not define or modify how coding sessions should consume these docs. This
    skill only maintains the index and documentation surfaces.
+10. Match the language of generated documentation to the language already used
+    in the project's existing docs (README, CLAUDE.md, AGENTS.md, docs/).
+    When no signal is found, default to English.
 
 ## Index Format
 
