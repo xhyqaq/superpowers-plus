@@ -38,6 +38,13 @@ This skill owns initialization, incremental updates, and reusable-asset
 capture. It does not own runtime lookup behavior or full-repository reuse
 audits unless the user explicitly asks for those.
 
+## Delegation
+
+Dispatch all work in this skill to a **Haiku subagent** using the Agent tool
+with `model: "haiku"`. Pass the full task context (asset name, relevant file
+paths, language signal). The subagent handles all file writes and the git
+commit. The main agent only invokes the subagent and reports the result.
+
 ## Rules
 
 1. Trigger when code is clearly reusable or when the user asks to initialize or
