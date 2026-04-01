@@ -75,6 +75,11 @@ git commit. The main agent only invokes Beaver and reports the result.
 11. After all index and asset doc changes are written, stage and commit them
     with a concise message such as
     `docs: add reusable asset index for <name>`. Do not skip this step.
+12. Before writing a new asset doc, check whether
+    `docs/superpowers/reuse/<name>/README.md` already exists. If it does,
+    compare its contents against the current implementation. Update only the
+    sections that are stale or missing; do not overwrite sections that are
+    still accurate.
 
 ## Index Format
 
