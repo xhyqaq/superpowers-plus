@@ -65,6 +65,9 @@ audits unless the user explicitly asks for those.
 10. Match the language of generated documentation to the language already used
     in the project's existing docs (README, CLAUDE.md, AGENTS.md, docs/).
     When no signal is found, default to English.
+11. After all index and asset doc changes are written, stage and commit them
+    with a concise message such as
+    `docs: add reusable asset index for <name>`. Do not skip this step.
 
 ## Index Format
 
