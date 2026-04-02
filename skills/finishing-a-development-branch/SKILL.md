@@ -269,7 +269,7 @@ git worktree remove <worktree-path>
 ## Integration
 
 **Called by:**
-- **executing-plans** (Step 5) - After all batches complete
+- **executing-plans** - After implementation and the `reviewer` loop are complete
 
 **Pairs with:**
 - **using-git-worktrees** - Cleans up worktree created by that skill

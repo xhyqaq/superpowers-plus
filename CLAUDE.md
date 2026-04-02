@@ -82,8 +82,7 @@
   - `skills/systematic-debugging/` - 系统化调试技能
   - `skills/test-driven-development/` - TDD 技能
   - `skills/writing-skills/` - 编写技能的技能
-  - `skills/requesting-code-review/` - 请求代码审查技能
-  - `skills/receiving-code-review/` - 接收代码审查技能
+  - `skills/reviewer/` - 统一审查技能
   - `skills/finishing-a-development-branch/` - 完成开发分支技能
   - `skills/dispatching-parallel-agents/` - 并行代理调度技能
   - `skills/using-superpowers/` - 使用超能力技能
@@ -91,10 +90,6 @@
   - `skills/reusable-assets-index/` - 可复用资产索引技能
   - `skills/maintaining-code-standards/` - 代码规范维护技能
   - `skills/verification-before-completion/` - 完成前验证技能
-
-### Agents (代理定义)
-- **位置**: `agents/*.md`
-- **文件**: `agents/code-reviewer.md` - 代码审查代理
 
 ### Commands (命令定义)
 - **位置**: `commands/*.md`

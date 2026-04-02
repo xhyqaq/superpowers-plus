@@ -232,9 +232,9 @@ When writing implementation plans, reference existing code standards. If the pla
 
 **Flow**: brainstorming → writing-plans → executing-plans → (if pattern works) → maintaining-code-standards
 
-### code-reviewer (agents/code-reviewer.md)
+### reviewer
 
-Code review agents should:
+Reviewer subagents should:
 1. Check code against recorded standards
 2. Flag violations with references to specific standards
 3. Suggest recording new patterns if consistent across multiple files

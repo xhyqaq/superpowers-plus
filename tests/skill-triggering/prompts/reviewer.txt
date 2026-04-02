@@ -1,0 +1,1 @@
+All implementation subagents have finished. Review the completed implementation against the spec and code quality bar, then decide whether fixes need to be dispatched before branch completion.

@@ -135,13 +135,13 @@ gemini extensions update superpowers-plus
 
 3. **writing-plans** - 在设计获批后激活。将工作分解为小任务（每个 2-5 分钟）。每个任务都有确切的文件路径、完整的代码和验证步骤。
 
-4. **executing-plans** - 在计划完成后激活。当任务独立时自动分派并行子代理，当任务耦合时使用串行子代理，并在工作流中保持审查检查点。
+4. **executing-plans** - 在计划完成后激活。当任务独立时自动分派并行子代理，当任务耦合时使用串行子代理，并在所有实现工作结束后交给 `reviewer`。
 
 5. **test-driven-development** - 在实施期间激活。强制执行 RED-GREEN-REFACTOR：编写失败测试，观察其失败，编写最少代码，观察其通过，提交。删除测试前编写的代码。
 
-6. **requesting-code-review** - 在任务之间激活。根据计划审查，按严重程度报告问题。严重问题会阻止进度。
+6. **reviewer** - 在所有实现子代理完成后激活。审查 spec 对齐和代码质量，将结果返回给主代理，并在需要时由主代理分派修复子代理。
 
-7. **finishing-a-development-branch** - 在任务完成时激活。验证测试，提供选项（合并/PR/保留/丢弃），清理工作树。
+7. **finishing-a-development-branch** - 在实现和审查完成后激活。验证测试，提供选项（合并/PR/保留/丢弃），清理工作树。
 
 **代理在任何任务之前都会检查相关技能。** 强制工作流，而不是建议。
 
@@ -159,10 +159,9 @@ gemini extensions update superpowers-plus
 **协作**
 - **brainstorming** - 苏格拉底式设计细化
 - **writing-plans** - 详细实施计划
-- **executing-plans** - 自动并行/串行子代理路由，内置审查检查点
+- **executing-plans** - 自动并行/串行子代理路由，并在实现完成后交给审查流程
 - **dispatching-parallel-agents** - 并发子代理工作流
-- **requesting-code-review** - 审查前检查清单
-- **receiving-code-review** - 响应反馈
+- **reviewer** - 统一的实现后审查闭环
 - **using-git-worktrees** - 并行开发分支
 - **finishing-a-development-branch** - 合并/PR 决策工作流
 

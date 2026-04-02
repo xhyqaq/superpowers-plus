@@ -135,13 +135,13 @@ Start a new session in your chosen platform and ask for something that should tr
 
 3. **writing-plans** - Activates with approved design. Breaks work into bite-sized tasks (2-5 minutes each). Every task has exact file paths, complete code, verification steps.
 
-4. **executing-plans** - Activates with plan. Automatically dispatches parallel subagents when tasks are independent, serial subagents when they are coupled, and keeps review checkpoints inside the workflow.
+4. **executing-plans** - Activates with plan. Automatically dispatches parallel subagents when tasks are independent, serial subagents when they are coupled, and hands off to `reviewer` after all implementation work is complete.
 
 5. **test-driven-development** - Activates during implementation. Enforces RED-GREEN-REFACTOR: write failing test, watch it fail, write minimal code, watch it pass, commit. Deletes code written before tests.
 
-6. **requesting-code-review** - Activates between tasks. Reviews against plan, reports issues by severity. Critical issues block progress.
+6. **reviewer** - Activates after all implementation subagents finish. Reviews spec alignment and code quality, returns findings to the main agent, and lets the main agent dispatch fixer subagents when needed.
 
-7. **finishing-a-development-branch** - Activates when tasks complete. Verifies tests, presents options (merge/PR/keep/discard), cleans up worktree.
+7. **finishing-a-development-branch** - Activates after implementation and review are complete. Verifies tests, presents options (merge/PR/keep/discard), cleans up worktree.
 
 **The agent checks for relevant skills before any task.** Mandatory workflows, not suggestions.
 
@@ -159,10 +159,9 @@ Start a new session in your chosen platform and ask for something that should tr
 **Collaboration**
 - **brainstorming** - Socratic design refinement
 - **writing-plans** - Detailed implementation plans
-- **executing-plans** - Automatic parallel/serial subagent routing with in-flow review checkpoints
+- **executing-plans** - Automatic parallel/serial subagent routing with post-implementation review handoff
 - **dispatching-parallel-agents** - Concurrent subagent workflows
-- **requesting-code-review** - Pre-review checklist
-- **receiving-code-review** - Responding to feedback
+- **reviewer** - Unified post-implementation review loop
 - **using-git-worktrees** - Parallel development branches
 - **finishing-a-development-branch** - Merge/PR decision workflow
 

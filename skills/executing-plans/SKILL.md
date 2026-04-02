@@ -1,13 +1,13 @@
 ---
 name: executing-plans
-description: Use when you have a written implementation plan to execute in a separate session with review checkpoints
+description: Use when you have a written implementation plan to execute in the current session
 ---
 
 # Executing Plans
 
 ## Overview
 
-Load plan, review critically, execute all tasks with subagents, report when complete.
+Load plan, review critically, execute all tasks with subagents, run one consolidated review loop after implementation completes, and report when complete.
 
 **Announce at start:** "I'm using the executing-plans skill to implement this plan."
 
@@ -33,6 +33,10 @@ Main agent (you) uses high-capability models for planning and coordination. Suba
 - **Codex**: `gpt-5.3` or equivalent lower-tier model
 - **Gemini**: `gemini-1.5-flash` or `gemini-2.0-flash-exp`
 - **Other platforms**: Use the lowest-capability model tier available
+
+**Reviewer exception:**
+- Reviewer subagents always use the highest-capability review model available on the platform
+- Fixer subagents are separate worker subagents launched by the main agent after accepted findings are returned
 
 **Upgrade policy:**
 When a subagent task fails or requires deeper reasoning:
@@ -64,7 +68,11 @@ For each task or batch:
    - Use lower-capability models by default (see Model Strategy above)
    - Upgrade to main agent's model only when task fails or requires deeper reasoning
 
-3. **Track progress:**
+3. **Record the review base before implementation starts:**
+   - Set `REVIEW_BASE_SHA=$(git rev-parse HEAD)` before dispatching the first implementation batch
+   - Keep that base stable for the final consolidated review
+
+4. **Track progress:**
    - Mark task or batch as in_progress before dispatch
    - Subagents follow plan steps exactly (plan has bite-sized steps)
    - Subagents run verifications as specified
@@ -72,9 +80,24 @@ For each task or batch:
 
 **Never execute tasks yourself** - even if it seems faster, preserving your context for coordination is more valuable.
 
-### Step 3: Complete Development
+### Step 3: Review Completed Implementation
 
 After all tasks complete and verified:
+- Announce: "I'm using the reviewer skill to review the completed implementation."
+- **REQUIRED SUB-SKILL:** Use superpowers:reviewer
+- Review the full implementation range from `REVIEW_BASE_SHA` to `HEAD`
+- Pass the plan path and the spec path or approved requirements source
+
+If review returns accepted `Critical` or `Important` findings:
+- Dispatch fixer subagents from the main agent
+- Run the required verification commands after each accepted fix batch
+- Re-run `superpowers:reviewer` on the updated range
+
+Only continue when no accepted `Critical` or `Important` findings remain.
+
+### Step 4: Complete Development
+
+After implementation and review are complete:
 - Announce: "I'm using the finishing-a-development-branch skill to complete this work."
 - **REQUIRED SUB-SKILL:** Use superpowers:finishing-a-development-branch
 - Follow that skill to verify tests, present options, execute choice
@@ -97,6 +120,9 @@ After all tasks complete and verified:
 
 5. **"The plan says to follow these steps, so I'll execute them"**
    - NO. You orchestrate. Subagents execute. Pass the steps to a subagent.
+
+6. **"A subagent can spawn another subagent for review or fixes"**
+   - NO. The main agent controls the review and fix loop.
 
 **✅ Correct approach:**
 - Read files to understand and coordinate
@@ -129,6 +155,7 @@ After all tasks complete and verified:
 - Dispatch subagents for every task, even single tasks
 - Your context is for coordination, not implementation
 - Give subagents minimal, task-local context only
+- Keep `REVIEW_BASE_SHA` stable until the final consolidated review is done
 - Don't skip verifications
 - Stop when blocked, don't guess
 - Never start implementation on main/master branch without explicit user consent
@@ -138,4 +165,5 @@ After all tasks complete and verified:
 **Required workflow skills:**
 - **superpowers:using-git-worktrees** - REQUIRED: Set up isolated workspace before starting
 - **superpowers:writing-plans** - Creates the plan this skill executes
+- **superpowers:reviewer** - Runs the consolidated post-implementation review loop
 - **superpowers:finishing-a-development-branch** - Complete development after all tasks

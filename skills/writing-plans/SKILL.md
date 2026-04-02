@@ -55,6 +55,8 @@ This structure informs the task decomposition. Each task should produce self-con
 
 **Architecture:** [2-3 sentences about approach]
 
+**Spec:** [Path to approved spec, or "Conversation requirements" if no spec file exists]
+
 **Tech Stack:** [Key technologies/libraries]
 
 ---
@@ -146,4 +148,4 @@ Check if the user previously gave explicit authorization to proceed without appr
 **If NOT in autonomous mode:**
 - Announce: "Plan complete and saved to `docs/superpowers/plans/<filename>.md`. Execute it with `superpowers:executing-plans`."
 - Stop and wait for user decision on whether to proceed
-- `executing-plans` will decide whether each batch should run in parallel or serial subagent mode, keep each subagent context minimal, and continue through the required review checkpoints
+- `executing-plans` will decide whether each batch should run in parallel or serial subagent mode, keep each subagent context minimal, record `REVIEW_BASE_SHA`, and run `reviewer` after implementation completes
