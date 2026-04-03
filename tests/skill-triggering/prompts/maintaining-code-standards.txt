@@ -1,0 +1,1 @@
+We keep using the same API naming and error-handling conventions across multiple modules. Help me record these as project-wide code standards so future work stays consistent.

@@ -1,6 +1,6 @@
 ---
 name: maintaining-code-standards
-description: Use when code reviews, brainstorming, or planning reveal reusable patterns that should become project conventions, or when existing code demonstrates standards worth documenting - records design principles, naming conventions, interface patterns, and architectural guidelines directly in CLAUDE.md
+description: Use when code reviews, brainstorming, or planning reveal reusable patterns that should become project conventions, or when existing code demonstrates standards worth documenting - records design principles, naming conventions, interface patterns, and architectural guidelines in repository instruction files such as AGENTS.md or CLAUDE.md
 ---
 
 # Maintaining Code Standards
@@ -9,7 +9,7 @@ description: Use when code reviews, brainstorming, or planning reveal reusable p
 
 Record project-level design principles, naming conventions, interface patterns, and architectural guidelines as they emerge from development. Core principle: capture **design decisions and rationales** that guide future work, not specific code implementations.
 
-**This skill maintains the "Code Standards" section in CLAUDE.md only.** It does NOT create separate documentation directories.
+**This skill maintains the "Code Standards" section in the repository instruction file (`AGENTS.md` or `CLAUDE.md`).** It does NOT create separate documentation directories.
 
 **Relationship with reusable-assets-index:**
 - reusable-assets-index → Records **concrete code** (components, functions, utilities)
@@ -37,6 +37,7 @@ Record project-level design principles, naming conventions, interface patterns, 
 ## Scope
 
 This skill operates ONLY on:
+- The "Code Standards" section in `AGENTS.md`
 - The "Code Standards" section in `CLAUDE.md`
 
 Do NOT:
@@ -85,13 +86,17 @@ Do NOT:
    - Add categories only if genuinely needed (rare)
    - Maintain consistent formatting
 
-## Index Format in CLAUDE.md
+9. **Align instruction files when needed**:
+   - If both `AGENTS.md` and `CLAUDE.md` exist, update the repository's active instruction file
+   - Keep both aligned when they intentionally mirror each other, unless the user asks for a platform-specific difference
 
-The Code Standards section should appear **after** the reusable assets index section and **before** the project structure index section.
+## Index Format in AGENTS.md / CLAUDE.md
+
+The Code Standards section should appear **after** the reusable assets index section and **before** the project structure index section in the repository instruction file.
 
 ### Recommended Structure
 
-Note: CLAUDE.md uses Chinese, so the section headers and guidance are in Chinese. Adapt the language as needed for your project.
+Note: use the language already established by the repository instruction file. In this repository, `AGENTS.md` uses Chinese.
 
 ```markdown
 ---
@@ -185,7 +190,7 @@ No security practices recorded yet.
 | Aspect | Policy |
 |--------|--------|
 | Trigger mode | Implicit (recognize patterns) or explicit (user request) |
-| Location | CLAUDE.md "Code Standards" section only |
+| Location | Repository instruction file "Code Standards" section (`AGENTS.md` / `CLAUDE.md`) |
 | Structure | Single-layer (no separate docs) |
 | Entry length | 2-3 sentences per standard |
 | Categories | 7 predefined (see Index Format) |
@@ -204,7 +209,7 @@ No security practices recorded yet.
 
 **Creating new documentation files**
 - **Problem**: Violates single-layer structure, increases context load
-- **Fix**: Everything goes in CLAUDE.md section only
+- **Fix**: Everything goes in the repository instruction file's Code Standards section
 
 **Recording one-off decisions**
 - **Problem**: Clutters standards with non-reusable information
@@ -262,7 +267,7 @@ Agent: "I notice this error handling pattern is used consistently across
         appears to be a project standard worth documenting."
 
 [Agent invokes maintaining-code-standards]
-[Updates CLAUDE.md with error handling standard]
+[Updates AGENTS.md or CLAUDE.md with error handling standard]
 
 Agent: "Recorded error handling pattern to Code Standards."
 ```
@@ -273,7 +278,7 @@ Agent: "Recorded error handling pattern to Code Standards."
 User: "We've decided all APIs should use RESTful conventions. Please record this in the code standards."
 
 Agent: "I'm using the maintaining-code-standards skill to record this."
-[Adds RESTful API standard to CLAUDE.md]
+[Adds RESTful API standard to the repository instruction file]
 
 Agent: "RESTful API standard recorded in Code Standards → API Design section."
 ```
@@ -288,7 +293,7 @@ Agent: "We've decided on container/presentational pattern for components.
         a code standard."
 
 [Invokes maintaining-code-standards]
-[Adds architecture pattern to CLAUDE.md]
+[Adds architecture pattern to AGENTS.md or CLAUDE.md]
 
 Agent: "Standard recorded. Now moving to implementation planning..."
 ```
