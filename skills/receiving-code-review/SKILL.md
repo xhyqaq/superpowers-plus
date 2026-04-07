@@ -204,6 +204,10 @@ You understand 1,2,3,6. Unclear on 4,5.
 
 When replying to inline review comments on GitHub, reply in the comment thread (`gh api repos/{owner}/{repo}/pulls/{pr}/comments/{id}/replies`), not as a top-level PR comment.
 
+## Repository Memory Follow-Through
+
+If resolved review feedback exposes a stable recurring pitfall, reusable runbook, contract rule, or architectural decision, preserve it with `curating-repository-memory` instead of leaving it only in review comments.
+
 ## The Bottom Line
 
 **External feedback = suggestions to evaluate, not orders to follow.**

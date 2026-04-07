@@ -79,6 +79,7 @@ You: [Fix progress indicators]
 **Executing Plans:**
 - Review after each batch
 - Get feedback, apply, continue
+- If review reveals durable recurring rules, contract changes, or reusable procedures, hand off those outcomes to `curating-repository-memory` after the review cycle settles
 
 **Ad-Hoc Development:**
 - Review before merge

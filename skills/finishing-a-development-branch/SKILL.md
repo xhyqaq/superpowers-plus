@@ -149,6 +149,14 @@ git worktree remove <worktree-path>
 
 **For Option 3:** Keep worktree.
 
+## Repository Memory Gate
+
+Before presenting completion options, check whether the just-finished cycle created durable knowledge that belongs in `docs/forgeflow/memory/`.
+
+- If yes, invoke `curating-repository-memory` first and save the memory update report.
+- If no, explicitly note that the result is `no_memory_update` and continue.
+- Do not skip this check after major refactors, contract changes, reusable rollout procedures, or review findings that are likely to recur.
+
 ## Quick Reference
 
 | Option | Merge | Push | Keep Worktree | Cleanup Branch |
@@ -197,3 +205,4 @@ git worktree remove <worktree-path>
 
 **Pairs with:**
 - **using-git-worktrees** - Cleans up worktree created by that skill
+- **curating-repository-memory** - Preserves durable repo knowledge before merge, PR, or cleanup decisions

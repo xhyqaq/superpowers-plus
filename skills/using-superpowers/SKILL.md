@@ -97,10 +97,11 @@ These thoughts mean STOP—you're rationalizing:
 When multiple skills could apply, use this order:
 
 1. **Process skills first** (brainstorming, debugging) - these determine HOW to approach the task
-2. **Implementation skills second** (frontend-design, mcp-builder) - these guide execution
+2. **Repository memory skills next** (bootstrapping-repository-memory, curating-repository-memory) - these determine whether durable repo knowledge should be initialized or updated
+3. **Implementation skills second** (frontend-design, mcp-builder) - these guide execution
 
-"Let's build X" → brainstorming first, then implementation skills.
-"Fix this bug" → debugging first, then domain-specific skills.
+"Let's build X" → brainstorming first, then repository-memory check, then implementation skills.
+"Fix this bug" → debugging first, then repository-memory check, then domain-specific skills.
 
 ## Skill Types
 
@@ -109,6 +110,14 @@ When multiple skills could apply, use this order:
 **Flexible** (patterns): Adapt principles to context.
 
 The skill itself tells you which.
+
+## Repository Memory Gate
+
+Before normal delivery work, check whether the target repository or subsystem already has usable canonical memory under `docs/forgeflow/memory/`.
+
+- If memory is sparse or missing for the area you are about to touch, invoke `bootstrapping-repository-memory` before planning or implementation.
+- If the current cycle produced durable knowledge worth preserving, invoke `curating-repository-memory` near the end of the cycle after implementation and review.
+- Do not invoke either memory skill for ephemeral task notes or one-off local observations.
 
 ## User Instructions
 
