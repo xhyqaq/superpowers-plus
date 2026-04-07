@@ -113,7 +113,7 @@ The skill itself tells you which.
 
 ## Repository Memory Gate
 
-Before normal delivery work, check whether the target repository or subsystem already has usable canonical memory under `docs/forgeflow/memory/`.
+Before normal delivery work, check whether the target repository or subsystem already has usable canonical memory under `docs/superpowers/memory/`.
 
 - If memory is sparse or missing for the area you are about to touch, invoke `bootstrapping-repository-memory` before planning or implementation.
 - If the current cycle produced durable knowledge worth preserving, invoke `curating-repository-memory` near the end of the cycle after implementation and review.

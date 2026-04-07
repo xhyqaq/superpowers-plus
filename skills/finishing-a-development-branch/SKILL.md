@@ -151,7 +151,7 @@ git worktree remove <worktree-path>
 
 ## Repository Memory Gate
 
-Before presenting completion options, check whether the just-finished cycle created durable knowledge that belongs in `docs/forgeflow/memory/`.
+Before presenting completion options, check whether the just-finished cycle created durable knowledge that belongs in `docs/superpowers/memory/`.
 
 - If yes, invoke `curating-repository-memory` first and save the memory update report.
 - If no, explicitly note that the result is `no_memory_update` and continue.

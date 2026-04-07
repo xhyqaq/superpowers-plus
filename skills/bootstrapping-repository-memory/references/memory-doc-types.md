@@ -14,7 +14,7 @@ tags:
 owned_paths:
   - path/pattern
 related_docs:
-  - docs/forgeflow/memory/...
+  - docs/superpowers/memory/...
 entrypoints:
   - path/to/file
 last_verified_commit: abc1234
@@ -65,7 +65,7 @@ Use only fields that are actually supported by the evidence.
 
 ## Index page pattern
 
-`docs/forgeflow/memory/index.md` should stay short and answer:
+`docs/superpowers/memory/index.md` should stay short and answer:
 - what domains are covered
 - where the main module cards and contract docs live
 - what major gaps still exist

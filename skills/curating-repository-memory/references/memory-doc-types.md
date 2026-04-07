@@ -14,7 +14,7 @@ tags:
 owned_paths:
   - path/pattern
 related_docs:
-  - docs/forgeflow/memory/...
+  - docs/superpowers/memory/...
 entrypoints:
   - path/to/file
 last_verified_commit: abc1234

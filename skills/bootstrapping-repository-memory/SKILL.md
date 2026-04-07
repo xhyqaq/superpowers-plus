@@ -16,7 +16,7 @@ This skill is for initialization and backfill, not for every routine delivery cy
 ## When to Use
 
 Use when:
-- the repository has little or no canonical memory under `docs/forgeflow/memory/`
+- the repository has little or no canonical memory under `docs/superpowers/memory/`
 - a legacy subsystem is about to receive repeated work
 - context exploration shows that memory is sparse or missing
 - a team wants to initialize memory manually instead of waiting for it to emerge task by task
@@ -37,7 +37,7 @@ Inputs this skill can consume:
 1. Choose the smallest useful scope.
 2. Inspect existing docs, tests, and stable code paths in that scope.
 3. Create the highest-value module cards and contract docs first.
-4. Create or update `docs/forgeflow/memory/index.md` and obvious sub-index pages.
+4. Create or update `docs/superpowers/memory/index.md` and obvious sub-index pages.
 5. Record gaps, uncertainties, and suggested follow-up scopes in a bootstrap report.
 
 ## Quality Bar
@@ -50,7 +50,7 @@ Inputs this skill can consume:
 
 ## Outputs
 
-Write memory docs under `docs/forgeflow/memory/` and a bootstrap report under `docs/forgeflow/memory/reports/`.
+Write memory docs under `docs/superpowers/memory/` and a bootstrap report under `docs/superpowers/memory/reports/`.
 Use [memory-doc-types.md](references/memory-doc-types.md), [bootstrap-report-template.md](references/bootstrap-report-template.md), and [return-contract.md](references/return-contract.md).
 
 ## Integration

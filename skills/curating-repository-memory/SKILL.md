@@ -65,7 +65,7 @@ Choose doc types deliberately:
 
 ## Outputs
 
-Write or update canonical docs under `docs/forgeflow/memory/` and save a report under `docs/forgeflow/memory/reports/`.
+Write or update canonical docs under `docs/superpowers/memory/` and save a report under `docs/superpowers/memory/reports/`.
 Use [memory-doc-types.md](references/memory-doc-types.md), [memory-update-report-template.md](references/memory-update-report-template.md), and [return-contract.md](references/return-contract.md).
 
 ## Integration
