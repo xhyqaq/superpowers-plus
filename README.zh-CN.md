@@ -38,7 +38,6 @@ Superpowers Plus 当前相对上游主要做了这些收敛和调整：
   - 实施计划 → `docs/superpowers/plans/YYYY-MM-DD-<feature-name>.md`
   - 提交文档 → `docs/superpowers/commits/<module>/`
 - 为 spec 和 plan 内置自审查机制，在用户审查前提前发现占位符、矛盾和歧义。
-- 新增 `reusable-assets-index` 技能，用于管理可复用代码/组件文档。
 - 强化了 AGENTS.md 和 CLAUDE.md 中的仓库级文档索引。
 
 **仓库一致性：**
@@ -169,7 +168,6 @@ gemini extensions update superpowers-plus
 **元技能**
 - **writing-skills** - 按照最佳实践创建新技能（包含测试方法论）
 - **using-superpowers** - 技能系统介绍
-- **reusable-assets-index** - 管理可复用代码/组件文档的 AGENTS.md/CLAUDE.md 索引
 
 ## 理念
 

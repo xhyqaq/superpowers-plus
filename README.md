@@ -38,7 +38,6 @@ Superpowers Plus has made the following consolidations and adjustments relative 
   - Implementation plans → `docs/superpowers/plans/YYYY-MM-DD-<feature-name>.md`
   - Commit documentation → `docs/superpowers/commits/<module>/`
 - Built-in self-review mechanisms for both specs and plans before user review, catching placeholders, contradictions, and ambiguities early.
-- Added `reusable-assets-index` skill for managing reusable code/component documentation.
 - Strengthened repository-level documentation indexing in AGENTS.md and CLAUDE.md.
 
 **Repository Consistency:**
@@ -169,7 +168,6 @@ Start a new session in your chosen platform and ask for something that should tr
 **Meta**
 - **writing-skills** - Create new skills following best practices (includes testing methodology)
 - **using-superpowers** - Introduction to the skills system
-- **reusable-assets-index** - Manage reusable code/component documentation in AGENTS.md/CLAUDE.md indexes
 
 ## Philosophy
 
