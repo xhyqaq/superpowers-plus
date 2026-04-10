@@ -76,6 +76,11 @@ For each task or batch:
 
 After all tasks complete and verified:
 - If the cycle produced durable knowledge, major boundary changes, stable pitfalls, or reusable runbooks, announce: "I'm using the curating-repository-memory skill to preserve durable repository knowledge." Then use `superpowers:curating-repository-memory` before branch-finishing work.
+- If an acceptance criteria document exists at `docs/superpowers/acceptance/` for this feature:
+  - Announce: "I'm using the acceptance-testing skill to verify all criteria."
+  - **REQUIRED SUB-SKILL:** Use `superpowers:acceptance-testing`
+  - If acceptance-testing reports failures, create fix tasks and return to Step 2; do NOT proceed to branch finishing
+  - Only continue after acceptance-testing returns a full PASS
 - Announce: "I'm using the finishing-a-development-branch skill to complete this work."
 - **REQUIRED SUB-SKILL:** Use superpowers:finishing-a-development-branch
 - Follow that skill to verify tests, present options, execute choice
@@ -141,4 +146,5 @@ After all tasks complete and verified:
 - **superpowers:bootstrapping-repository-memory** - Use before planning or execution when the target area lacks usable repository memory
 - **superpowers:writing-plans** - Creates the plan this skill executes
 - **superpowers:curating-repository-memory** - Use after implementation and review when durable knowledge should be preserved
+- **superpowers:acceptance-testing** - Run after code review is resolved, before branch finishing (when AC document exists)
 - **superpowers:finishing-a-development-branch** - Complete development after all tasks

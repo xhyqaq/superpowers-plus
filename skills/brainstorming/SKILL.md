@@ -32,7 +32,8 @@ Authorization signals include:
 **When autonomous mode is activated:**
 - **Step 4 (Approaches):** Present your recommendation and reasoning, but proceed without waiting for user selection
 - **Step 5 (Design):** Present the entire design at once without asking for approval after each section
-- **Step 8 (Spec Review):** Skip the user review gate and proceed directly to writing-plans
+- **Step 8 (Spec Review):** Skip the user review gate and proceed directly to writing-acceptance-criteria
+- **Step 9 (Acceptance Criteria):** Skip the user approval gate after writing the AC document and proceed directly to writing-plans
 
 **Important:** Autonomous mode does NOT skip step 3 (clarifying questions) if authorization is given during that phase. Clarifying questions are essential for understanding requirements. Autonomous mode only affects approval gates, not information gathering.
 
@@ -48,7 +49,8 @@ You MUST create a task for each of these items and complete them in order:
 6. **Write design doc** — save to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md` and commit
 7. **Spec self-review** — quick inline check for placeholders, contradictions, ambiguity, scope (see below)
 8. **User reviews written spec** — ask user to review the spec file before proceeding
-9. **Transition to implementation** — invoke writing-plans skill to create implementation plan
+9. **Write acceptance criteria** — invoke writing-acceptance-criteria skill to produce `docs/superpowers/acceptance/YYYY-MM-DD-<feature>.md` from the approved spec; await user approval (skip approval gate in autonomous mode)
+10. **Transition to implementation** — invoke writing-plans skill to create implementation plan
 
 ## Process Flow
 
@@ -64,6 +66,8 @@ digraph brainstorming {
     "Write design doc" [shape=box];
     "Spec self-review\n(fix inline)" [shape=box];
     "User reviews spec?" [shape=diamond];
+    "Write acceptance criteria" [shape=box];
+    "User approves AC?" [shape=diamond];
     "Invoke writing-plans skill" [shape=doublecircle];
 
     "Explore project context" -> "Visual questions ahead?";
@@ -78,11 +82,14 @@ digraph brainstorming {
     "Write design doc" -> "Spec self-review\n(fix inline)";
     "Spec self-review\n(fix inline)" -> "User reviews spec?";
     "User reviews spec?" -> "Write design doc" [label="changes requested"];
-    "User reviews spec?" -> "Invoke writing-plans skill" [label="approved"];
+    "User reviews spec?" -> "Write acceptance criteria" [label="approved"];
+    "Write acceptance criteria" -> "User approves AC?";
+    "User approves AC?" -> "Write acceptance criteria" [label="changes requested"];
+    "User approves AC?" -> "Invoke writing-plans skill" [label="approved"];
 }
 ```
 
-**The terminal state is invoking writing-plans.** Do NOT invoke frontend-design, mcp-builder, or any other implementation skill. The ONLY skill you invoke after brainstorming is writing-plans.
+**The terminal state is invoking writing-plans.** Do NOT invoke frontend-design, mcp-builder, or any other implementation skill. After spec approval, invoke `writing-acceptance-criteria`, then after AC approval invoke `writing-plans`.
 
 ## The Process
 
@@ -157,12 +164,14 @@ Wait for the user's response. If they request changes, make them and re-run the 
 **Implementation:**
 
 **In autonomous mode:**
+- Invoke `writing-acceptance-criteria` to produce the AC document (skip the approval gate)
 - Invoke the writing-plans skill to create a detailed implementation plan
 - The plan will be saved and committed automatically
 - After writing-plans completes, it will automatically invoke executing-plans to begin implementation
-- The entire pipeline (brainstorming → planning → execution) runs without further approval gates
+- The entire pipeline (brainstorming → acceptance criteria → planning → execution) runs without further approval gates
 
 **Not in autonomous mode:**
+- Invoke `writing-acceptance-criteria` to produce the AC document; wait for user approval
 - Invoke the writing-plans skill to create a detailed implementation plan
 - Stop after the plan is complete and wait for user decision on whether to execute
 - Do NOT invoke any other skill beyond writing-plans at this stage
