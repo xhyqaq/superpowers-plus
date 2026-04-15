@@ -75,7 +75,12 @@ For each task or batch:
 ### Step 3: Complete Development
 
 After all tasks complete and verified:
-- If the cycle produced durable knowledge, major boundary changes, stable pitfalls, or reusable runbooks, announce: "I'm using the curating-repository-memory skill to preserve durable repository knowledge." Then use `superpowers:curating-repository-memory` before branch-finishing work.
+- Announce: "I'm using the requesting-code-review skill to review all changes."
+- **REQUIRED SUB-SKILL:** Use `superpowers:requesting-code-review`
+- If review reports Critical/Important issues, create fix tasks and return to Step 2; do NOT proceed until resolved
+- Only continue after review returns PASS or only Minor/Suggestion-level findings
+- If the cycle produced durable knowledge, major boundary changes, stable pitfalls, or reusable runbooks, announce: "I'm using the curating-repository-memory skill to preserve durable repository knowledge." Then use `superpowers:curating-repository-memory`.
+- If the cycle resolved a bug, architectural change, interface contract update, or recurring pitfall with clear reuse value, announce: "I'm using the distilling-lessons skill to extract reusable lessons." Then use `superpowers:distilling-lessons`.
 - If an acceptance criteria document exists at `docs/superpowers/acceptance/` for this feature:
   - Announce: "I'm using the acceptance-testing skill to verify all criteria."
   - **REQUIRED SUB-SKILL:** Use `superpowers:acceptance-testing`
@@ -145,6 +150,8 @@ After all tasks complete and verified:
 - **superpowers:using-git-worktrees** - REQUIRED: Set up isolated workspace before starting
 - **superpowers:bootstrapping-repository-memory** - Use before planning or execution when the target area lacks usable repository memory
 - **superpowers:writing-plans** - Creates the plan this skill executes
-- **superpowers:curating-repository-memory** - Use after implementation and review when durable knowledge should be preserved
+- **superpowers:requesting-code-review** - REQUIRED: Run after all tasks complete, before memory/lessons/QA steps
+- **superpowers:curating-repository-memory** - Use after code review when durable structural knowledge should be preserved
+- **superpowers:distilling-lessons** - Use after code review when bugs, pitfalls, or architectural decisions have clear reuse value
 - **superpowers:acceptance-testing** - Run after code review is resolved, before branch finishing (when AC document exists)
 - **superpowers:finishing-a-development-branch** - Complete development after all tasks

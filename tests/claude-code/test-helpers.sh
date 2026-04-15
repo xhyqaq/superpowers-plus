@@ -1,6 +1,42 @@
 #!/usr/bin/env bash
 # Helper functions for Claude Code skill tests
 
+timeout_cmd() {
+    if command -v timeout >/dev/null 2>&1; then
+        printf '%s\n' "timeout"
+        return 0
+    fi
+
+    if command -v gtimeout >/dev/null 2>&1; then
+        printf '%s\n' "gtimeout"
+        return 0
+    fi
+
+    if command -v perl >/dev/null 2>&1; then
+        printf '%s\n' "perl"
+        return 0
+    fi
+
+    return 1
+}
+
+run_with_timeout() {
+    local timeout_seconds="$1"
+    shift
+
+    local timeout_tool
+    timeout_tool="$(timeout_cmd)" || {
+        echo "ERROR: timeout, gtimeout, or perl is required to run tests" >&2
+        return 127
+    }
+
+    if [ "$timeout_tool" = "perl" ]; then
+        perl -e 'alarm shift @ARGV; exec @ARGV' "$timeout_seconds" "$@"
+    else
+        "$timeout_tool" "$timeout_seconds" "$@"
+    fi
+}
+
 # Run Claude Code with a prompt and capture output
 # Usage: run_claude "prompt text" [timeout_seconds] [allowed_tools]
 run_claude() {
@@ -16,7 +52,7 @@ run_claude() {
     fi
 
     # Run Claude in headless mode with timeout
-    if timeout "$timeout" bash -c "$cmd" > "$output_file" 2>&1; then
+    if run_with_timeout "$timeout" bash -c "$cmd" > "$output_file" 2>&1; then
         cat "$output_file"
         rm -f "$output_file"
         return 0
@@ -193,6 +229,7 @@ EOF
 
 # Export functions for use in tests
 export -f run_claude
+export -f run_with_timeout
 export -f assert_contains
 export -f assert_not_contains
 export -f assert_count

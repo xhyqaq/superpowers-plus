@@ -79,8 +79,27 @@ fi
 
 echo ""
 
-# Test 5: Verify default low-level model guidance
-echo "Test 5: Model strategy..."
+# Test 5: Verify review gate before completion
+echo "Test 5: Review gate..."
+
+output=$(run_claude "After all tasks in executing-plans are complete, what must happen before memory curation, acceptance testing, or branch finishing?" 30)
+
+if assert_contains "$output" "requesting-code-review\|code review\|review all changes" "Mentions required review gate"; then
+    : # pass
+else
+    exit 1
+fi
+
+if assert_contains "$output" "critical\|important\|minor\|suggestion" "Describes review severity gating"; then
+    : # pass
+else
+    exit 1
+fi
+
+echo ""
+
+# Test 6: Verify default low-level model guidance
+echo "Test 6: Model strategy..."
 
 output=$(run_claude "What model should executing-plans use for subagents by default, and when should it upgrade?" 30)
 
